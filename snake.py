@@ -10,7 +10,7 @@ turtle.setup(SIZE_X,SIZE_Y)
 turtle.penup()
 
 SQUARE_SIZE=20
-START_LENGTH=8
+START_LENGTH=10
 
 pos_list=[]
 stamp_list=[]
@@ -94,6 +94,7 @@ def make_food():
     food_pos.append((food_x,food_y))
     my_food_stamp=food.stamp()
     food_stamps.append(my_food_stamp)
+     
     
                           
 
@@ -125,6 +126,7 @@ def move_snake():
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
         print('you have eaten the food')
+        make_food()
     
     my_stamp1=stamp_list.pop(0)
     snake.clearstamp(my_stamp1)
@@ -162,11 +164,31 @@ for this_food_pos in food_pos:
     my_food_stamp=food.stamp()
     food_stamps.append(my_food_stamp)
 
-    
-    
+def snake_suicide():
+    if pos_list[-1]==pos_list[0]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[1]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[2]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[3]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[4]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[5]:
+          print('you hit yourself')
+    elif pos_list[-1]==pos_list[6]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[7]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[8]:
+         print('you hit yourself')
+    elif pos_list[-1]==pos_list[9]:
+         print('you hit yourself')
+        
   
 move_snake()
-make_food()    
+snake_suicide()    
     
     
 turtle.mainloop()    
