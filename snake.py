@@ -2,7 +2,7 @@ import turtle
 import random
 
 turtle.tracer(1,0)
-
+#the size of the snake field
 SIZE_X=800
 SIZE_Y=500
 turtle.setup(SIZE_X,SIZE_Y)
@@ -10,17 +10,18 @@ turtle.setup(SIZE_X,SIZE_Y)
 turtle.penup()
 
 SQUARE_SIZE=20
-START_LENGTH=10
+START_LENGTH=1
 
-pos_list=[]
-stamp_list=[]
-food_pos=[]
-food_stamps=[]
+#all of the lists i will use in the snake game
+pos_list=[]#list of the snake positions(where is the snake)
+stamp_list=[]#number of square stamps which the snake is made of  
+food_pos=[]#list of food position(where is the food)
+food_stamps=[]#number of food stamps
 
 snake=turtle.clone()
 snake.shape('square')
 
-turtle.hideturtle()
+turtle.hideturtle()#in order for the snake wont leave a marks behinde it
 
 for i in range(START_LENGTH):
     x_pos=snake.pos()[0]
@@ -55,7 +56,7 @@ UP_EDGE=250
 DOWN_EDGE=-250
 LEFT_EDGE=-400
 RIGHT_EDGE=400
-
+#make the snake move according to the arrows on the keyboard
 def up():
     global direction
     direction=UP
@@ -82,7 +83,7 @@ turtle.onkeypress(left,LEFT_ARROW)
 turtle.onkeypress(right,RIGHT_ARROW)
 
 turtle.listen()
-
+#make new food at random places
 def make_food():
     min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
     max_x=int(SIZE_X/2/SQUARE_SIZE)-1
@@ -97,11 +98,13 @@ def make_food():
      
     
                           
-
+#make
 def move_snake():
     my_pos=snake.pos()
     x_pos=my_pos[0]
     y_pos=my_pos[1]
+
+    
 
     if direction==RIGHT:
         snake.goto(x_pos+SQUARE_SIZE,y_pos)
@@ -125,8 +128,16 @@ def move_snake():
         food.clearstamp(food_stamps[food_ind])
         food_pos.pop(food_ind)
         food_stamps.pop(food_ind)
-        print('you have eaten the food')
+        my_stamp1=snake.stamp()
         make_food()
+        pos_list.append(snake.pos())
+        stamp_list.append(my_stamp1)
+        print('you have eaten the food')
+        print(len(stamp_list)-2)
+        
+    elif snake.pos() in pos_list[0:-1]:
+        print('you comitted suicide')
+        quit()   
     
     my_stamp1=stamp_list.pop(0)
     snake.clearstamp(my_stamp1)
@@ -158,37 +169,23 @@ food.shape('turtle')
 
 food_pos=[(100,100),(-100,100),(-100,-100),(100,-100)]
 food_stamps=[]
+
 food.hideturtle()
 for this_food_pos in food_pos:
     food.goto(this_food_pos)
     my_food_stamp=food.stamp()
     food_stamps.append(my_food_stamp)
 
-def snake_suicide():
-    if pos_list[-1]==pos_list[0]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[1]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[2]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[3]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[4]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[5]:
-          print('you hit yourself')
-    elif pos_list[-1]==pos_list[6]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[7]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[8]:
-         print('you hit yourself')
-    elif pos_list[-1]==pos_list[9]:
-         print('you hit yourself')
+turtle.goto(-400,-250)
+turtle.pendown()
+turtle.goto(-400,250)
+turtle.goto(400,250)
+turtle.goto(400,-250)
+turtle.penup()
         
   
 move_snake()
-snake_suicide()    
+   
     
     
 turtle.mainloop()    
