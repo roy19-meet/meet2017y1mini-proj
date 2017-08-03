@@ -20,6 +20,10 @@ food_stamps=[]#number of food stamps
 
 snake=turtle.clone()
 snake.shape('square')
+snake.color('blue')
+turtle.bgcolor('black')
+turtle.color('white')
+
 
 turtle.hideturtle()#in order for the snake wont leave a marks behinde it
 
@@ -59,22 +63,26 @@ RIGHT_EDGE=400
 #make the snake move according to the arrows on the keyboard
 def up():
     global direction
-    direction=UP
+    if direction!=DOWN:
+        direction=UP
     print('you pressed the up key')
 
 def down():
     global direction
-    direction=DOWN
+    if direction!=UP:
+        direction=DOWN
     print('you pressed the down key')
     
 def left():
     global direction
-    direction=LEFT
+    if direction!=RIGHT:
+        direction=LEFT
     print('you pressed the left key')
     
 def right():
     global direction
-    direction=RIGHT
+    if direction!=LEFT:
+        direction=RIGHT
     print('you pressed the right key')
 
 turtle.onkeypress(up,UP_ARROW)
@@ -85,12 +93,13 @@ turtle.onkeypress(right,RIGHT_ARROW)
 turtle.listen()
 #make new food at random places
 def make_food():
-    min_x=-int(SIZE_X/2/SQUARE_SIZE)+1
-    max_x=int(SIZE_X/2/SQUARE_SIZE)-1
-    min_y=-int(SIZE_Y/2/SQUARE_SIZE)-1
-    max_y=int(SIZE_Y/2/SQUARE_SIZE)+1
+    min_x=-int(SIZE_X/2.5/SQUARE_SIZE)+1
+    max_x=int(SIZE_X/2.5/SQUARE_SIZE)-1
+    min_y=-int(SIZE_Y/2.5/SQUARE_SIZE)+1
+    max_y=int(SIZE_Y/2.5/SQUARE_SIZE)-1
     food_x=random.randint(min_x,max_x)*SQUARE_SIZE
     food_y=random.randint(min_y,max_y)*SQUARE_SIZE
+    
     food.goto(food_x,food_y)
     food_pos.append((food_x,food_y))
     my_food_stamp=food.stamp()
@@ -98,14 +107,18 @@ def make_food():
      
     
                           
-#make
+#maoves the snake randomly
 def move_snake():
     my_pos=snake.pos()
     x_pos=my_pos[0]
     y_pos=my_pos[1]
 
     
-
+    
+    if snake.pos() in pos_list[0:-2]:
+        print('you comitted suicide')
+        quit()
+        
     if direction==RIGHT:
         snake.goto(x_pos+SQUARE_SIZE,y_pos)
         print('you moved right')
@@ -123,6 +136,8 @@ def move_snake():
     pos_list.append(my_pos)
     my_stamp2=snake.stamp()
     stamp_list.append(my_stamp2)
+
+    global food_stamps,food_pos
     if snake.pos() in food_pos:
         food_ind=food_pos.index(snake.pos())
         food.clearstamp(food_stamps[food_ind])
@@ -134,10 +149,7 @@ def move_snake():
         stamp_list.append(my_stamp1)
         print('you have eaten the food')
         print(len(stamp_list)-2)
-        
-    elif snake.pos() in pos_list[0:-1]:
-        print('you comitted suicide')
-        quit()   
+      
     
     my_stamp1=stamp_list.pop(0)
     snake.clearstamp(my_stamp1)
@@ -166,8 +178,7 @@ def move_snake():
 
 food=turtle.clone()
 food.shape('turtle')
-
-food_pos=[(100,100),(-100,100),(-100,-100),(100,-100)]
+food_pos=[(100,100)]
 food_stamps=[]
 
 food.hideturtle()
@@ -175,6 +186,7 @@ for this_food_pos in food_pos:
     food.goto(this_food_pos)
     my_food_stamp=food.stamp()
     food_stamps.append(my_food_stamp)
+
 
 turtle.goto(-400,-250)
 turtle.pendown()
