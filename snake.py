@@ -193,6 +193,7 @@ turtle.pendown()
 turtle.goto(-400,250)
 turtle.goto(400,250)
 turtle.goto(400,-250)
+turtle.goto(-400,-250)
 turtle.penup()
         
   
